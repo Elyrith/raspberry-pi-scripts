@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Crontab for root:
+# 0 * * * * /bin/date > /etc/pihole/update-check.txt && /usr/local/bin/pihole -up --check-only | tail -5 | head -3 >> /etc/pihole/update-check.txt
+
+# Put this file in /etc/update-motd.d/ and make it executable.
+
+date=$(date)
+printf "\nPiHole Update Check: ($date)\n"
+if [ -e "/etc/pihole/update-check.txt" ]; then
+	sed -n -e 1,4p -e 7p /etc/pihole/update-check.txt
+else
+	printf "PiHole update check file missing\n"
+fi
+
+exit 0
